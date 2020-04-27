@@ -1,0 +1,62 @@
+exports-location:
+ x: 1
+ y: 1
+ z: 1
+imports-location:
+ x: 2
+ y: 1
+ z: 1
+exports:
+ ores:
+  diamond: 250, 96, 128
+  iron: 80, 320, 384
+  gold: 90, 256, 320
+  emerald: 100, 256, 320
+  lapis-lazuli: 40, 768, 832
+  redstone: 45, 640, 704
+  coal: 30, 704, 768
+ blocks:
+  stone: 9, 2048, 2240
+  granite: 15, 1280, 1408
+  diorite: 15, 1280, 1408
+  andesite: 15, 1280, 1408
+  nether-bricks: 10, 1728, 1856
+  obsidian: 48, 640, 768
+  sand: 30, 832, 960
+  gravel: 38, 640, 832
+  red-sand: 40, 576, 640
+ food:
+  bread: 25, 576, 640
+  cookie: 28, 640, 704
+  pumpkin-pie: 28, 640, 704
+  cake: 180, 64, 64
+  cooked-porkchop: 80, 256, 320
+  steak: 80, 256, 320
+  cooked-mutton: 80, 256, 320
+  cooked-chicken: 70, 320, 384
+  cooked-rabbit: 90, 256, 320
+  golden-carrots: 100, 256, 320
+ crops:
+  wheat: 28, 640, 704
+  carrot: 31, 640, 704
+  potato: 31, 640, 704
+  nether-wart: 32, 640, 704
+  sugar-cane: 40, 576, 640
+  cactus: 40, 576, 640
+  bamboo: 28, 640, 704
+  kelp: 32, 640, 704
+ mob-drops:
+  gunpowder: 90, 256, 320
+  rotten-flesh: 28, 640, 704
+  bone: 80, 256, 320
+  string: 80, 256, 320
+  spider-eye: 90, 256, 320
+  blaze-rod: 28, 640, 704
+  wither-skeleton-skull: 5000, 12, 12
+  slime-ball: 31, 640, 704
+##imports:
+## ores:
+## blocks:
+## food:
+## crops:
+## mob-drops:
