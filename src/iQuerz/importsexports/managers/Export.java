@@ -25,14 +25,20 @@ public class Export {
 	public Export(Material item, int price, int amount, int index) {
 		this.price = price;
 		this.amount = amount;
-		int pg = index+1;
-		inv = Bukkit.createInventory(null, 9, "Daily export deals,	 pg. "+ pg);
+		inv = Bukkit.createInventory(null, 9, "Daily export deals");
 		inv = initializeInv(inv,item,price,amount);
 		this.index = index;
 	}
 	
 	public void openShop(Player p) {
 		p.openInventory(inv);
+	}
+	
+	public boolean checkInv(Inventory inventory) {
+		if(inventory.equals(this.inv)){
+			return true;
+		}
+		return false;
 	}
 	
 	public Inventory initializeInv(Inventory inv, Material item, int price, int amount) {
@@ -74,8 +80,9 @@ public class Export {
 		if(!inv.equals(event.getClickedInventory())) {
 			return;
 		}
+		
 		event.setCancelled(true);
-		//Bukkit.broadcastMessage("exports left:"+amount);
+		
 		if(event.getRawSlot()==2||event.getRawSlot()==3||event.getRawSlot()==4||event.getRawSlot()==5||event.getRawSlot()==6||event.getRawSlot()==7)
 			return;
 		Player p = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
@@ -104,7 +111,7 @@ public class Export {
 		    p.getInventory().setItem(index, amt > 0 ? itm : null);
 		    p.updateInventory();
 		    economy.depositPlayer(p, price);
-		    p.sendMessage("You got $"+price+".");
+		    p.sendMessage("§6You got $"+price+".");
 		    return;
 		}
 		if(event.getRawSlot()==1) {
@@ -113,7 +120,7 @@ public class Export {
 			removeItems(export.getType(),amount,0);
 			//Bukkit.broadcastMessage(""+timesExported);
 			economy.depositPlayer(p, price*timesExported);
-			p.sendMessage("You got $"+price*timesExported);
+			p.sendMessage("§6You got $"+price*timesExported);
 			amount -= timesExported;
 			timesExported =  0;
 			p.getInventory().setContents(playerInv.getContents());

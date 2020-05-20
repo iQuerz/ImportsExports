@@ -8,6 +8,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import iQuerz.importsexports.main.ImportsExports;
@@ -15,11 +16,16 @@ import net.milkbowl.vault.economy.Economy;
 
 public class ExportsManager {
 	List<Export> exports;
-	int activeIndex;
+	List<Import> imports;
+	int activeIndex, activeIndex1;
+	boolean available, available1;
 	
 	public ExportsManager(ImportsExports plugin) {
 		//initialize inventories
+		available = true;
+		available1 = true;
 		exports = new ArrayList<Export>();
+		imports = new ArrayList<Import>();
 		
 		Set<String> list = plugin.getConfig().getConfigurationSection("exports").getKeys(false);
 		List<String> subPaths = new ArrayList<String>(list);
@@ -31,21 +37,29 @@ public class ExportsManager {
 			String s = "exports."+subPaths.get(i)+"."+subPath.get(index);
 			String[] data = plugin.getConfig().getString(s).split(", ");
 			
-			int amount = Integer.parseInt(data[1]);
-			if(Integer.parseInt(data[1])<Integer.parseInt(data[2]))
-				amount = r.nextInt(Integer.parseInt(data[2]) - Integer.parseInt(data[1])) + Integer.parseInt(data[1]);
+			//int amount = Integer.parseInt(data[1]);
+			//if(Integer.parseInt(data[1])<Integer.parseInt(data[2]))
+			//	amount = r.nextInt(Integer.parseInt(data[2]) - Integer.parseInt(data[1])) + Integer.parseInt(data[1]);
 			
-			exports.add(new Export(getMaterialByName(s),Integer.parseInt(data[0]),amount,i));
+			exports.add(new Export(getMaterialByName(s),Integer.parseInt(data[0]),99999,i));
+			imports.add(new Import(getMaterialByName(s),Integer.parseInt(data[0]),99999,i));
 		}
 		this.activeIndex = 0;
+		this.activeIndex1 = 0;
 	}
 	
 	public void resetIndex() {
 		activeIndex = 0;
 	}
+	public void resetIndex1() {
+		activeIndex1 = 0;
+	}
 	
 	public int getIndex() {
 		return this.activeIndex;
+	}
+	public int getIndex1() {
+		return this.activeIndex1;
 	}
 	
 	public void updateIndex() {
@@ -53,15 +67,43 @@ public class ExportsManager {
 		if(activeIndex == 5)
 			activeIndex = 0;
 	}
+	public void updateIndex1() {
+		activeIndex1++;
+		if(activeIndex1 == 5)
+			activeIndex1 = 0;
+	}
 	
 	public void openExports(Player p, int index) {
-		exports.get(index).openShop(p);
-		
+		if(available) {
+			exports.get(index).openShop(p);
+			available = false;
+		}
+	}
+	
+	public void openImports(Player p, int index) {
+		if(available1) {
+			imports.get(index).openShop(p);
+			available1 = false;
+		}
+	}
+	
+	public void closeExport(InventoryCloseEvent event) {
+		if(exports.get(activeIndex).checkInv(event.getInventory()))
+			available = true;
+	}
+	public void closeImport(InventoryCloseEvent event) {
+		if(imports.get(activeIndex1).checkInv(event.getInventory()))
+			available1 = true;
 	}
 	
 	public void inventoryClick(InventoryClickEvent event, Inventory inventory,Economy economy, ImportsExports plugin) {
 		exports.get(activeIndex).onInventoryClick(event, inventory, economy, plugin);
 	}
+	
+	public void inventoryClick1(InventoryClickEvent event, Inventory inventory, Economy economy, ImportsExports plugin) {
+		imports.get(activeIndex1).onInventoryClick(event, inventory, economy, plugin);
+	}
+	
 	private Material getMaterialByName(String name) {
 		switch (name) {
 			case "exports.ores.diamond":{

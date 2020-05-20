@@ -11,6 +11,7 @@ import net.milkbowl.vault.economy.Economy;
 public class ImportsExports extends JavaPlugin{
 	Economy economy;
 	ExportsManager eManager;
+	
 	@Override
 	public void onEnable() {
 		this.saveDefaultConfig();

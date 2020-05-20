@@ -4,8 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 import iQuerz.importsexports.main.ImportsExports;
 
@@ -38,7 +38,8 @@ public class Listeners implements Listener{
 		}
 		else {
 			if(event.getClickedBlock().getLocation().equals(new Location(event.getClickedBlock().getLocation().getWorld(),x2,y2,z2,0,0))) {
-				event.getPlayer().sendMessage("imports coming soon...");
+				plugin.getEManager().resetIndex1();
+				plugin.getEManager().openImports(event.getPlayer(), 0);
 			}
 		}
 	}
@@ -46,10 +47,12 @@ public class Listeners implements Listener{
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		plugin.getEManager().inventoryClick(event, event.getInventory(), plugin.getEconomy(), plugin);
+		plugin.getEManager().inventoryClick1(event, event.getInventory(), plugin.getEconomy(), plugin);
 	}
 	
 	@EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event)
-    {
-    }
+	public void onClose(InventoryCloseEvent event) {
+		plugin.getEManager().closeExport(event);
+		plugin.getEManager().closeImport(event);
+	}
 }
