@@ -86,16 +86,19 @@ public class Import {
 		if(event.getRawSlot()==2||event.getRawSlot()==3||event.getRawSlot()==4||event.getRawSlot()==5||event.getRawSlot()==6||event.getRawSlot()==7)
 			return;
 		Player p = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+		
 		if(event.getRawSlot()==8) {
 			p.closeInventory();
 			plugin.getEManager().updateIndex1();
-			plugin.getEManager().openImports(p, plugin.getEManager().getIndex1());
+			plugin.getEManager().imports.get(plugin.getEManager().getIndex1()).openShop(p);
 			return;
 		}
+		
 		if(amount<1) {
 			p.sendMessage("Sorry, this import is not needed anymore.");
 			return;
 		}
+		
 		if(event.getRawSlot()==0) {
 			if(economy.getBalance(p) < price) {
 				p.sendMessage("Insufficient money");

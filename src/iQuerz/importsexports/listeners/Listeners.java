@@ -29,25 +29,21 @@ public class Listeners implements Listener{
 		if(event.getClickedBlock()==null)
 			return;
 		if(event.getClickedBlock().getLocation().equals(new Location(event.getClickedBlock().getLocation().getWorld(),x1,y1,z1,0,0))) {
-			if(event.getPlayer().getDisplayName()=="Giryee388") {
-				event.getPlayer().sendMessage("Sorry, you are not allowed to access exports right now.");
-				return;
-			}
 			plugin.getEManager().resetIndex();
-			plugin.getEManager().openExports(event.getPlayer(),0);
+			plugin.getEManager().openExports(event.getPlayer());
 		}
 		else {
 			if(event.getClickedBlock().getLocation().equals(new Location(event.getClickedBlock().getLocation().getWorld(),x2,y2,z2,0,0))) {
 				plugin.getEManager().resetIndex1();
-				plugin.getEManager().openImports(event.getPlayer(), 0);
+				plugin.getEManager().openImports(event.getPlayer());
 			}
 		}
 	}
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
-		plugin.getEManager().inventoryClick(event, event.getInventory(), plugin.getEconomy(), plugin);
-		plugin.getEManager().inventoryClick1(event, event.getInventory(), plugin.getEconomy(), plugin);
+		plugin.getEManager().inventoryClick(event, event.getClickedInventory(), plugin.getEconomy(), plugin);
+		plugin.getEManager().inventoryClick1(event, event.getClickedInventory(), plugin.getEconomy(), plugin);
 	}
 	
 	@EventHandler

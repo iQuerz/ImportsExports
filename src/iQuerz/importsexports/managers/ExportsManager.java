@@ -37,12 +37,8 @@ public class ExportsManager {
 			String s = "exports."+subPaths.get(i)+"."+subPath.get(index);
 			String[] data = plugin.getConfig().getString(s).split(", ");
 			
-			//int amount = Integer.parseInt(data[1]);
-			//if(Integer.parseInt(data[1])<Integer.parseInt(data[2]))
-			//	amount = r.nextInt(Integer.parseInt(data[2]) - Integer.parseInt(data[1])) + Integer.parseInt(data[1]);
-			
-			exports.add(new Export(getMaterialByName(s),Integer.parseInt(data[0]),99999,i));
-			imports.add(new Import(getMaterialByName(s),Integer.parseInt(data[0]),99999,i));
+			exports.add(new Export(getMaterialByName(s),Integer.parseInt(data[0]),999999,i));
+			imports.add(new Import(getMaterialByName(s),Integer.parseInt(data[0]),999999,i));
 		}
 		this.activeIndex = 0;
 		this.activeIndex1 = 0;
@@ -73,16 +69,18 @@ public class ExportsManager {
 			activeIndex1 = 0;
 	}
 	
-	public void openExports(Player p, int index) {
+	public void openExports(Player p) {
 		if(available) {
-			exports.get(index).openShop(p);
+			activeIndex = 0;
+			exports.get(activeIndex).openShop(p);
 			available = false;
 		}
 	}
 	
-	public void openImports(Player p, int index) {
+	public void openImports(Player p) {
 		if(available1) {
-			imports.get(index).openShop(p);
+			activeIndex1 = 0;
+			imports.get(activeIndex1).openShop(p);
 			available1 = false;
 		}
 	}
@@ -91,6 +89,7 @@ public class ExportsManager {
 		if(exports.get(activeIndex).checkInv(event.getInventory()))
 			available = true;
 	}
+	
 	public void closeImport(InventoryCloseEvent event) {
 		if(imports.get(activeIndex1).checkInv(event.getInventory()))
 			available1 = true;

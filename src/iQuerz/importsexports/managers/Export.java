@@ -35,7 +35,7 @@ public class Export {
 	}
 	
 	public boolean checkInv(Inventory inventory) {
-		if(inventory.equals(this.inv)){
+		if(inventory.equals(inv)){
 			return true;
 		}
 		return false;
@@ -77,7 +77,7 @@ public class Export {
 	int timesExported;
 	
 	public void onInventoryClick(InventoryClickEvent event, Inventory inventory, Economy economy, ImportsExports plugin) {
-		if(!inv.equals(event.getClickedInventory())) {
+		if(!inv.equals(inventory)) {
 			return;
 		}
 		
@@ -85,13 +85,16 @@ public class Export {
 		
 		if(event.getRawSlot()==2||event.getRawSlot()==3||event.getRawSlot()==4||event.getRawSlot()==5||event.getRawSlot()==6||event.getRawSlot()==7)
 			return;
+		
 		Player p = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+		
 		if(event.getRawSlot()==8) {
 			p.closeInventory();
 			plugin.getEManager().updateIndex();
-			plugin.getEManager().openExports(p, plugin.getEManager().getIndex());
+			plugin.getEManager().exports.get(plugin.getEManager().getIndex()).openShop(p);
 			return;
 		}
+		
 		if(amount<1) {
 			p.sendMessage("Sorry, this export is not needed anymore.");
 			return;
